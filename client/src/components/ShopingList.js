@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { deleteItem, getItems, sendItem } from '../redux/ItemAction';
-import { v4 as uuiv4 } from 'uuid'
+import { deleteItem, getItems, addItem } from '../redux/actions/ItemAction';
 
 function ShopingList() {
     const [Item, setItem] = useState('')
@@ -15,7 +13,7 @@ function ShopingList() {
 
     const HandleClick = () => {
         if (Item.length) {
-            sendItem(Item , dispatch)
+            addItem(Item , dispatch)
         }
 
     }

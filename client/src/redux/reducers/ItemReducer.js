@@ -1,12 +1,11 @@
-import { DELETE_ITEM, GET_ITEMS, ITEMS_LOADING, SEND_ITEM } from "./ItemTypes";
+import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from "../DataTypes";
 
 const initialState = {
     items: [],
-    loading : false,
-
+    loading : false
 }
 
-export const ItemReducer = (state = initialState, action) => {
+const ItemReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_ITEMS:
             return {
@@ -14,15 +13,17 @@ export const ItemReducer = (state = initialState, action) => {
                 items : action.payload,
                 loading : false
             }
-        case SEND_ITEM:
+        case ADD_ITEM:
             return {
                 ...state,
-                items : [...state.items,action.payload]
+                items : [...state.items ,action.payload],
+                loading : false
             }
         case DELETE_ITEM:
             return {
                 ...state,
-                items : state.items.filter(item => item._id !== action.payload)
+                items : state.items.filter(item => item._id !== action.payload),
+                loading : false
             }
         case ITEMS_LOADING:
             return {
@@ -30,6 +31,8 @@ export const ItemReducer = (state = initialState, action) => {
                 loading : true
             }
         default:
-            return initialState
+            return state
     }
 }
+
+export default ItemReducer
