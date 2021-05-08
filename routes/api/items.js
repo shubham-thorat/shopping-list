@@ -14,7 +14,7 @@ router.get('/',(req,res)=>{
             })
         else 
             res.status(200).json(items)
-    })
+    }).sort({"name" : 1})
 })
 
 //@routes POST  api/items
