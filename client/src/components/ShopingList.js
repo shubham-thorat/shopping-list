@@ -5,7 +5,8 @@ import { deleteItem, getItems, addItem } from '../redux/actions/ItemAction';
 function ShopingList() {
     const [Item, setItem] = useState('')
     const dispatch = useDispatch()
-    const itemData = useSelector(state => state.ItemReducer)
+    const itemData = useSelector(state => state.item)
+    const auth = useSelector(state => state.auth)
     const items = itemData.items
     useEffect(() => {
         getItems(dispatch)
@@ -13,13 +14,13 @@ function ShopingList() {
 
     const HandleClick = () => {
         if (Item.length) {
-            addItem(Item , dispatch)
+            addItem(Item, dispatch, auth ? auth.token : '')
         }
 
     }
 
     const HandleDelete = (id) => {
-       deleteItem(id,dispatch)
+        deleteItem(id, dispatch, auth ? auth.token : '')
     }
     return (
         <div className="container">
@@ -36,7 +37,7 @@ function ShopingList() {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <input type="text" value={Item} onChange={e => setItem(e.target.value)}/>
+                            <input type="text" value={Item} onChange={e => setItem(e.target.value)} />
                         </div>
                         <div className="modal-footer">
                             <button type="button" id="close-button" className="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -48,7 +49,7 @@ function ShopingList() {
             <ul className="list-group list-group-numbered">
                 {
                     items && items.length && items.map(item =>
-                        <li className="list-group-item" key={item._id}>
+                        <li className="list-group-item border border-4 border-dark mb-2" key={item._id}>
                             <button type="button" className="btn close" onClick={() => HandleDelete(item._id)}> &times;</button>
                             <h4 className="d-inline-block ml-5"> {item.name} </h4>
                         </li>

@@ -5,6 +5,8 @@ import cors from 'cors'
 import path from 'path'
 
 import Items from './routes/api/items.js'
+import Users from './routes/api/Users.js'
+import Auth from './routes/api/auth.js'
 
 const app = express()
 
@@ -16,7 +18,7 @@ app.use(cors())
 dotenv.config()
 
 //connect to mongodb
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => {
         console.log('Connect to Mongodb ..')
     })
@@ -26,6 +28,9 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 //use routes
 app.use('/api/items', Items)
+app.use('/api/users', Users)
+app.use('/api/auth', Auth)
+
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
